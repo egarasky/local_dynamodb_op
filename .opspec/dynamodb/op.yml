@@ -1,0 +1,16 @@
+name: dynamodb
+description: runs a local dynamodb container
+run:
+    container:
+        image: { ref: 'openjdk:alpine' }
+        dirs:
+            /DynamoDBLocal_lib: 
+        files:
+            /DynamoDBLocal.jar:
+        name: dynamodb
+        ports: { 8000: 8000 }
+        cmd:
+            - sh
+            - -ce
+            - |
+                java -Djava.library.path=./DynamoDBLocal_lib -jar DynamoDBLocal.jar | grep -vw "sqlite.SQLiteDBAccess" 
